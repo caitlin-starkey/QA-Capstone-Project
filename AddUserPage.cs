@@ -18,7 +18,7 @@ namespace QA_Capstone_Project
         {
             _webDriver = driver;
         }
-        public string AddUser()
+        public string[] AddUser()
         {
             WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
             wait.Until(d => userRoleDropdown.Displayed);
@@ -30,14 +30,19 @@ namespace QA_Capstone_Project
             Thread.Sleep(3000);
             employeeNameTextbox.SendKeys(Keys.ArrowDown);
             employeeNameTextbox.SendKeys(Keys.Return);
-            string employeeName = employeeNameTextbox.GetAttribute("value");
+            SeleniumHelpers _seleniumHelpers;
+            _seleniumHelpers = new SeleniumHelpers(_webDriver);
+            string[] newUserDetails = new string[3];
+            newUserDetails[0] = employeeNameTextbox.GetAttribute("value"); //employee's full name
+            newUserDetails[1] = _seleniumHelpers.CreateUsername(); //employee's username
+            newUserDetails[2] = _seleniumHelpers.CreatePassword(); //employee's password
             usernameTextbox.Click();
-            usernameTextbox.SendKeys("iamanewuser5");
+            usernameTextbox.SendKeys(newUserDetails[1]);
             passwordTextbox.Click();
-            passwordTextbox.SendKeys("AaNn3eWw^^^^");
+            passwordTextbox.SendKeys(newUserDetails[2]);
             passwordTextbox.SendKeys(Keys.Tab);
             IWebElement currentElement = _webDriver.SwitchTo().ActiveElement();
-            currentElement.SendKeys("AaNn3eWw^^^^");
+            currentElement.SendKeys(newUserDetails[2]);
             saveUserButton.Click();
             WebDriverWait wait2 = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
             wait2.Until(d => addUserSuccess.Displayed);
@@ -49,7 +54,7 @@ namespace QA_Capstone_Project
             string expectedUrl = _adminPage.adminPageUrl;
             string actualUrl = _webDriver.Url;
             Assert.AreEqual(expectedUrl, actualUrl);
-            return employeeName;
+            return newUserDetails;
         }
         public string addUserPageUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/admin/saveSystemUser";
         public IWebElement userRoleDropdown => _webDriver.FindElement(By.XPath("//div[@class='oxd-input-group oxd-input-field-bottom-space' and contains(./descendant::*, 'User Role')]"));

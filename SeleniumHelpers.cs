@@ -36,6 +36,36 @@ namespace QA_Capstone_Project
                 Actions a = new Actions(_webDriver);
                 a.ScrollToElement(element).Click(element).Perform();
             }
-           
+            public string CreateUsername()
+            {
+                var chars = "0123456789abcdefghijklmnoqqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                var username = new StringBuilder();
+                var random = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    username.Append(chars[random.Next(chars.Length)]);
+                }
+                return username.ToString();
+            }
+             public string CreatePassword()
+             {
+                var chars = "0123456789abcdefghijklmnoqqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%";
+                var passwordgenerator = new StringBuilder();
+                var random = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    passwordgenerator.Append(chars[random.Next(chars.Length)]);
+                }
+                string password = passwordgenerator.ToString();
+                if (password.Any(char.IsDigit) && password.Any(char.IsSymbol))
+                {
+                    return password;
+                }
+                else
+                {
+                    password += "1!";
+                    return password;
+                }
+             }
         }
 }

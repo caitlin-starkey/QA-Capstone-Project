@@ -46,14 +46,14 @@ namespace QA_Capstone_Project
             string actualUrl = _webDriver.Url;
             Assert.AreEqual(expectedUrl, actualUrl);
             _webDriver.WaitAndClick(() => _adminPage.addUserButton);
-            string fullEmployeeName = _addUserPage.AddUser();
-            string[] names = fullEmployeeName.Split(' ');
+            string[] newUserDetails = _addUserPage.AddUser();
+            string[] names = newUserDetails[0].Split(' '); //takes the employee's full name and splits it up
             var firstName = names.First();
             var lastName = names.Last();
             string expectedEmployeeName = firstName + " " + lastName;
             _persistentHeader.userOptionsDropdown.Click();
             _persistentHeader.userOptionsDropdownLogout.Click();
-            _loginPage.LoginAddedUser();
+            _loginPage.LoginAddedUser(newUserDetails[1], newUserDetails[2]);
             _webDriver.WaitAndClick(() => _persistentHeader.userOptionsDropdown);
             string actualEmployeeName = _webDriver.FindElement(By.XPath("//p[@class='oxd-userdropdown-name']")).Text;
             Assert.AreEqual(expectedEmployeeName, actualEmployeeName);
