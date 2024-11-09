@@ -17,7 +17,7 @@ namespace QA_Capstone_Project
         }
         public string dashboardPageUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index";
         public IWebElement dashboardHeader => _webDriver.FindElement(By.XPath("//h6[text()='Dashboard']"));
-        public IWebElement sidebarButtonAdmin => _webDriver.FindElement(By.XPath("//a[@href='/web/index.php/admin/viewAdminModule']"));
+        
 
     }
 }

@@ -18,6 +18,10 @@ namespace QA_Capstone_Project
 
         public string adminPageUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewSystemUsers";
         public IWebElement addUserButton => _webDriver.FindElement(By.XPath("//button[contains(., 'Add')]"));
+        public IWebElement searchSystemUsersViaUsernameTextbox => _webDriver.FindElement(By.XPath("//input[@class='oxd-input oxd-input--active' and not(contains(@placeholder, 'Search'))]"));
+        public IWebElement searchSystemUsersViaUsernameTextboxFocused => _webDriver.FindElement(By.XPath("//input[@class='oxd-input oxd-input--focus' and not(contains(@placeholder, 'Search'))]"));
+        public IWebElement editUserButton => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-pencil-fill']"));
+        public IWebElement deleteUserButton => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-trash']"));
     }
     
 }

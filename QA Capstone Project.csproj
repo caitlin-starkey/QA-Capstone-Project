@@ -84,12 +84,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddUserPage.cs" />
+    <Compile Include="AddOrEditUserPage.cs" />
     <Compile Include="AdminPage.cs" />
     <Compile Include="DashboardPage.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="LoginPage.cs" />
     <Compile Include="PersistentHeader.cs" />
+    <Compile Include="PersistentSidebar.cs" />
     <Compile Include="SeleniumHelpers.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

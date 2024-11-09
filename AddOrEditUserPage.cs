@@ -10,11 +10,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QA_Capstone_Project
 {
-    public class AddUserPage
+    public class AddOrEditUserPage
     {
         public IWebDriver _webDriver;
 
-        public AddUserPage(IWebDriver driver)
+        public AddOrEditUserPage(IWebDriver driver)
         {
             _webDriver = driver;
         }
@@ -56,6 +56,51 @@ namespace QA_Capstone_Project
             Assert.AreEqual(expectedUrl, actualUrl);
             return newUserDetails;
         }
+        public string[] EditUser()
+        {
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait.Until(d => userRoleDropdown.Displayed);
+            userRoleDropdown.Click();
+            userRoleDropdownOptionESS.Click();
+            statusDropdown.Click();
+            statusDropdownOptionDisabled.Click();
+            employeeNameTextbox.Click();
+            employeeNameTextbox.SendKeys(Keys.Control + "a");
+            employeeNameTextbox.SendKeys(Keys.Delete);
+            employeeNameTextbox.SendKeys("d");
+            Thread.Sleep(3000);
+            employeeNameTextbox.SendKeys(Keys.ArrowDown);
+            employeeNameTextbox.SendKeys(Keys.Return);
+            SeleniumHelpers _seleniumHelpers;
+            _seleniumHelpers = new SeleniumHelpers(_webDriver);
+            string[] updatedUserDetails = new string[3];
+            updatedUserDetails[0] = employeeNameTextbox.GetAttribute("value"); //employee's new full name
+            updatedUserDetails[1] = _seleniumHelpers.CreateUsername(); //employee's new username
+            updatedUserDetails[2] = _seleniumHelpers.CreatePassword(); //employee's new password
+            usernameTextbox.Click();
+            usernameTextbox.SendKeys(Keys.Control + "a");
+            usernameTextbox.SendKeys(Keys.Delete);
+            usernameTextbox.SendKeys(updatedUserDetails[1]);
+            changePasswordCheckbox.Click();
+            passwordTextbox.Click();
+            passwordTextbox.SendKeys(updatedUserDetails[2]);
+            passwordTextbox.SendKeys(Keys.Tab);
+            IWebElement currentElement = _webDriver.SwitchTo().ActiveElement();
+            currentElement.SendKeys(updatedUserDetails[2]);
+            saveUserButton.Click();
+            WebDriverWait wait2 = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait2.Until(d => updateUserSuccess.Displayed);
+            //expecting to go back to the admin page if the user was updated successfully
+            AdminPage _adminPage;
+            _adminPage = new AdminPage(_webDriver);
+            WebDriverWait wait3 = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait3.Until(d => _adminPage.addUserButton.Displayed);
+            string expectedUrl = _adminPage.adminPageUrl;
+            string actualUrl = _webDriver.Url;
+            Assert.AreEqual(expectedUrl, actualUrl);
+            return updatedUserDetails;
+        }
+
         public string addUserPageUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/admin/saveSystemUser";
         public IWebElement userRoleDropdown => _webDriver.FindElement(By.XPath("//div[@class='oxd-input-group oxd-input-field-bottom-space' and contains(./descendant::*, 'User Role')]"));
         public IWebElement userRoleDropdownOptionAdmin => userRoleDropdown.FindElement(By.XPath("./descendant::*[@role='option' and contains(./*, 'Admin')]"));
@@ -70,6 +115,8 @@ namespace QA_Capstone_Project
         //public IWebElement confirmPasswordTextbox => _webDriver.FindElement(By.XPath("//input[@type='password' and contains(./ancestor::*, 'Confirm Password')]")); could not figure out how to accurately target this and NOT put the password in the first box twice, approached differently
         public IWebElement saveUserButton => _webDriver.FindElement(By.XPath("//button[@type='submit']"));
         public IWebElement addUserSuccess => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text' and contains(., 'Successfully Saved')]"));
+        public IWebElement updateUserSuccess => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text' and contains(., 'Successfully Updated')]"));
+        public IWebElement changePasswordCheckbox => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-check oxd-checkbox-input-icon']"));
     }
    
 }
