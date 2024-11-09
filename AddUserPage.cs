@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QA_Capstone_Project
 {
@@ -17,7 +18,7 @@ namespace QA_Capstone_Project
         {
             _webDriver = driver;
         }
-        public void AddUser()
+        public string AddUser()
         {
             WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
             wait.Until(d => userRoleDropdown.Displayed);
@@ -29,14 +30,26 @@ namespace QA_Capstone_Project
             Thread.Sleep(3000);
             employeeNameTextbox.SendKeys(Keys.ArrowDown);
             employeeNameTextbox.SendKeys(Keys.Return);
+            string employeeName = employeeNameTextbox.GetAttribute("value");
             usernameTextbox.Click();
-            usernameTextbox.SendKeys("iamanewuser");
+            usernameTextbox.SendKeys("iamanewuser5");
             passwordTextbox.Click();
             passwordTextbox.SendKeys("AaNn3eWw^^^^");
             passwordTextbox.SendKeys(Keys.Tab);
             IWebElement currentElement = _webDriver.SwitchTo().ActiveElement();
             currentElement.SendKeys("AaNn3eWw^^^^");
             saveUserButton.Click();
+            WebDriverWait wait2 = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait2.Until(d => addUserSuccess.Displayed);
+            //expecting to go back to the admin page if the user was added successfully
+            AdminPage _adminPage;
+            _adminPage = new AdminPage(_webDriver);
+            WebDriverWait wait3 = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait3.Until(d => _adminPage.addUserButton.Displayed);
+            string expectedUrl = _adminPage.adminPageUrl;
+            string actualUrl = _webDriver.Url;
+            Assert.AreEqual(expectedUrl, actualUrl);
+            return employeeName;
         }
         public string addUserPageUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/admin/saveSystemUser";
         public IWebElement userRoleDropdown => _webDriver.FindElement(By.XPath("//div[@class='oxd-input-group oxd-input-field-bottom-space' and contains(./descendant::*, 'User Role')]"));
@@ -51,6 +64,7 @@ namespace QA_Capstone_Project
         public IWebElement passwordTextbox => _webDriver.FindElement(By.XPath("//input[@type='password' and contains(./ancestor::*, 'Password')]"));
         //public IWebElement confirmPasswordTextbox => _webDriver.FindElement(By.XPath("//input[@type='password' and contains(./ancestor::*, 'Confirm Password')]")); could not figure out how to accurately target this and NOT put the password in the first box twice, approached differently
         public IWebElement saveUserButton => _webDriver.FindElement(By.XPath("//button[@type='submit']"));
+        public IWebElement addUserSuccess => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text' and contains(., 'Successfully Saved')]"));
     }
    
 }

@@ -35,6 +35,15 @@ namespace QA_Capstone_Project
             string actualUrl = _webDriver.Url;
             Assert.AreEqual(expectedUrl, actualUrl);
         }
+        public void LoginAddedUser()
+        {
+            _webDriver.Navigate().GoToUrl(loginPageUrl);
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait.Until(d => usernameTextbox.Displayed);
+            usernameTextbox.SendKeys("iamanewuser5");
+            passwordTextbox.SendKeys("AaNn3eWw^^^^");
+            submitButton.Click();
+        }
         public string loginPageUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
         public IWebElement usernameTextbox => _webDriver.FindElement(By.XPath("//input[@name='username']"));
         public IWebElement passwordTextbox => _webDriver.FindElement(By.XPath("//input[@name='password']"));

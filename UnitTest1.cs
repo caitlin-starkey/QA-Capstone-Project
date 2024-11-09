@@ -5,6 +5,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System.Threading;
+using System.Linq;
 
 namespace QA_Capstone_Project
 {
@@ -17,6 +18,7 @@ namespace QA_Capstone_Project
         public AdminPage _adminPage;
         public SeleniumHelpers _seleniumHelpers;
         public AddUserPage _addUserPage;
+        public PersistentHeader _persistentHeader;
 
         [TestInitialize]
         public void Setup()
@@ -27,6 +29,7 @@ namespace QA_Capstone_Project
             _adminPage = new AdminPage(_webDriver);
             _seleniumHelpers = new SeleniumHelpers(_webDriver);
             _addUserPage = new AddUserPage(_webDriver);
+            _persistentHeader = new PersistentHeader(_webDriver);
         }
 
         //[TestMethod]
@@ -43,9 +46,17 @@ namespace QA_Capstone_Project
             string actualUrl = _webDriver.Url;
             Assert.AreEqual(expectedUrl, actualUrl);
             _webDriver.WaitAndClick(() => _adminPage.addUserButton);
-            _addUserPage.AddUser();
-
-
+            string fullEmployeeName = _addUserPage.AddUser();
+            string[] names = fullEmployeeName.Split(' ');
+            var firstName = names.First();
+            var lastName = names.Last();
+            string expectedEmployeeName = firstName + " " + lastName;
+            _persistentHeader.userOptionsDropdown.Click();
+            _persistentHeader.userOptionsDropdownLogout.Click();
+            _loginPage.LoginAddedUser();
+            _webDriver.WaitAndClick(() => _persistentHeader.userOptionsDropdown);
+            string actualEmployeeName = _webDriver.FindElement(By.XPath("//p[@class='oxd-userdropdown-name']")).Text;
+            Assert.AreEqual(expectedEmployeeName, actualEmployeeName);
         }
 
         [TestCleanup]
