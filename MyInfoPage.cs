@@ -27,7 +27,7 @@ namespace QA_Capstone_Project
             updatedEmployeeName[0] = _seleniumHelpers.CreateUsername(); //new first name
             updatedEmployeeName[1] = _seleniumHelpers.CreateUsername(); //new middle name
             updatedEmployeeName[2] = _seleniumHelpers.CreateUsername(); //new last name
-            Thread.Sleep(1000);
+            Thread.Sleep(1000); //there is some kind of temporary element blocking the web elements I want to target on the page if the browser doesn't wait a little. haven't been able to find it to do anything about it other than a hard stop for 1 second.
             firstNameTextbox.Click();
             firstNameTextboxFocused.SendKeys(Keys.Control + "a");
             firstNameTextboxFocused.SendKeys(Keys.Delete);

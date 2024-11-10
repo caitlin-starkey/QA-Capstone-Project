@@ -84,10 +84,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddLeaveEntitlementsPage.cs" />
     <Compile Include="AddOrEditUserPage.cs" />
     <Compile Include="AdminPage.cs" />
+    <Compile Include="ApplyLeavePage.cs" />
     <Compile Include="DashboardPage.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="LeaveListPage.cs" />
     <Compile Include="LoginPage.cs" />
     <Compile Include="MyInfoPage.cs" />
     <Compile Include="PersistentHeader.cs" />

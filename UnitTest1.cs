@@ -121,7 +121,11 @@ namespace QA_Capstone_Project
             string actualEmployeeName = _webDriver.FindElement(By.XPath("//p[@class='oxd-userdropdown-name']")).Text;
             Assert.AreEqual(expectedEmployeeName, actualEmployeeName); //assert passing means the employee name is successfully displaying in the top right, completing this test case
         }
+        [TestMethod]
+        public void ApplyForLeave()
+        {
 
+        }
 
         [TestCleanup]
         public void Cleanup()
