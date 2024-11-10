@@ -16,5 +16,6 @@ namespace QA_Capstone_Project
             _webDriver = driver;
         }
         public IWebElement sidebarButtonAdmin => _webDriver.FindElement(By.XPath("//a[@href='/web/index.php/admin/viewAdminModule']"));
+        public IWebElement sidebarButtonMyInfo => _webDriver.FindElement(By.XPath("//a[@href='/web/index.php/pim/viewMyDetails']"));
     }
 }

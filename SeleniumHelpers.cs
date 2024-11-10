@@ -40,7 +40,7 @@ namespace QA_Capstone_Project
             {
                 var chars = "0123456789abcdefghijklmnoqqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 var username = new StringBuilder();
-                var random = new Random();
+                var random = new Random(Guid.NewGuid().GetHashCode());
                 for (int i = 0; i < 10; i++)
                 {
                     username.Append(chars[random.Next(chars.Length)]);
@@ -51,7 +51,7 @@ namespace QA_Capstone_Project
              {
                 var chars = "0123456789abcdefghijklmnoqqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%";
                 var passwordgenerator = new StringBuilder();
-                var random = new Random();
+                var random = new Random(Guid.NewGuid().GetHashCode());
                 for (int i = 0; i < 10; i++)
                 {
                     passwordgenerator.Append(chars[random.Next(chars.Length)]);

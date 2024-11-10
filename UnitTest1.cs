@@ -20,6 +20,7 @@ namespace QA_Capstone_Project
         public AddOrEditUserPage _addOrEditUserPage;
         public PersistentHeader _persistentHeader;
         public PersistentSidebar _persistentSidebar;
+        public MyInfoPage _myInfoPage;
 
         [TestInitialize]
         public void Setup()
@@ -32,6 +33,7 @@ namespace QA_Capstone_Project
             _addOrEditUserPage = new AddOrEditUserPage(_webDriver);
             _persistentHeader = new PersistentHeader(_webDriver);
             _persistentSidebar = new PersistentSidebar(_webDriver);
+            _myInfoPage = new MyInfoPage(_webDriver);
         }
 
 
@@ -107,6 +109,19 @@ namespace QA_Capstone_Project
             _webDriver.WaitAndClick(() => _adminPage.confirmDeleteUserButton);
             wait.Until(d => _adminPage.deleteUserSuccess.Displayed); //if message displays, user has been successfully deleted
         }
+        [TestMethod]
+        public void ChangeEmployeeName() //assignment test case is listed as "Change User Name" but asks to target the employee name, my method is named for clarity of function
+        {
+            _loginPage.Login();
+            _persistentSidebar.sidebarButtonMyInfo.Click();
+            string[] updatedEmployeeName = _myInfoPage.EditEmployeeName();
+            _webDriver.Navigate().Refresh();
+            string expectedEmployeeName = updatedEmployeeName[0] + " " + updatedEmployeeName[2];
+            _webDriver.WaitAndClick(() => _persistentHeader.userOptionsDropdown);
+            string actualEmployeeName = _webDriver.FindElement(By.XPath("//p[@class='oxd-userdropdown-name']")).Text;
+            Assert.AreEqual(expectedEmployeeName, actualEmployeeName); //assert passing means the employee name is successfully displaying in the top right, completing this test case
+        }
+
 
         [TestCleanup]
         public void Cleanup()

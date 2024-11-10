@@ -89,6 +89,7 @@
     <Compile Include="DashboardPage.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="LoginPage.cs" />
+    <Compile Include="MyInfoPage.cs" />
     <Compile Include="PersistentHeader.cs" />
     <Compile Include="PersistentSidebar.cs" />
     <Compile Include="SeleniumHelpers.cs" />
