@@ -22,6 +22,8 @@ namespace QA_Capstone_Project
         public IWebElement searchSystemUsersViaUsernameTextboxFocused => _webDriver.FindElement(By.XPath("//input[@class='oxd-input oxd-input--focus' and not(contains(@placeholder, 'Search'))]"));
         public IWebElement editUserButton => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-pencil-fill']"));
         public IWebElement deleteUserButton => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-trash']"));
+        public IWebElement confirmDeleteUserButton => _webDriver.FindElement(By.XPath("//button[@class='oxd-button oxd-button--medium oxd-button--label-danger orangehrm-button-margin' and contains(., 'Yes, Delete')]"));
+        public IWebElement deleteUserSuccess => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text' and contains(., 'Successfully Deleted')]"));
     }
     
 }

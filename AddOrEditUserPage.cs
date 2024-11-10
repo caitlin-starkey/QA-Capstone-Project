@@ -117,6 +117,7 @@ namespace QA_Capstone_Project
         public IWebElement addUserSuccess => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text' and contains(., 'Successfully Saved')]"));
         public IWebElement updateUserSuccess => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text' and contains(., 'Successfully Updated')]"));
         public IWebElement changePasswordCheckbox => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-check oxd-checkbox-input-icon']"));
+        public IWebElement cancelChangesButton => _webDriver.FindElement(By.XPath("//button[@class='oxd-button oxd-button--medium oxd-button--ghost' and contains(., 'Cancel')]"));
     }
    
 }

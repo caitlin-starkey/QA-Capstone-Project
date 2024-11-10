@@ -86,9 +86,26 @@ namespace QA_Capstone_Project
             _adminPage.searchSystemUsersViaUsernameTextboxFocused.SendKeys(Keys.Return);
             _webDriver.WaitAndClick(() => _adminPage.editUserButton);
             string[] updatedUserDetails = _addOrEditUserPage.EditUser();
-
-
-
+            _adminPage.searchSystemUsersViaUsernameTextbox.SendKeys(updatedUserDetails[1]);
+            _adminPage.searchSystemUsersViaUsernameTextboxFocused.SendKeys(Keys.Return);
+            _webDriver.WaitAndClick(() => _adminPage.editUserButton);
+            wait.Until(d => _addOrEditUserPage.usernameTextbox.Displayed);
+            string currentUserRole = _addOrEditUserPage.userRoleDropdown.Text;
+            Assert.AreEqual($"User Role{Environment.NewLine}ESS", currentUserRole); //this and the following three asserts confirm that the user information was successfully updated
+            string currentStatus = _addOrEditUserPage.statusDropdown.Text;
+            Assert.AreEqual($"Status{Environment.NewLine}Disabled", currentStatus);
+            string currentEmployeeName = _addOrEditUserPage.employeeNameTextbox.GetAttribute("value");
+            Assert.AreEqual(updatedUserDetails[0], currentEmployeeName);
+            _addOrEditUserPage.usernameTextbox.Click();
+            string currentUsername = _addOrEditUserPage.usernameTextbox.GetAttribute("value");
+            Assert.AreEqual(updatedUserDetails[1], currentUsername);
+            _addOrEditUserPage.cancelChangesButton.Click();
+            wait.Until(d => _adminPage.searchSystemUsersViaUsernameTextbox.Displayed);
+            _adminPage.searchSystemUsersViaUsernameTextbox.SendKeys(updatedUserDetails[1]);
+            _adminPage.searchSystemUsersViaUsernameTextboxFocused.SendKeys(Keys.Return);
+            _webDriver.WaitAndClick(() => _adminPage.deleteUserButton);
+            _webDriver.WaitAndClick(() => _adminPage.confirmDeleteUserButton);
+            wait.Until(d => _adminPage.deleteUserSuccess.Displayed); //if message displays, user has been successfully deleted
         }
 
         [TestCleanup]
