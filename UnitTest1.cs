@@ -21,6 +21,9 @@ namespace QA_Capstone_Project
         public PersistentHeader _persistentHeader;
         public PersistentSidebar _persistentSidebar;
         public MyInfoPage _myInfoPage;
+        public LeaveListPage _leaveListPage;
+        public ApplyLeavePage _applyLeavePage;
+        public AddLeaveEntitlementsPage _addLeaveEntitlementsPage;
 
         [TestInitialize]
         public void Setup()
@@ -34,6 +37,9 @@ namespace QA_Capstone_Project
             _persistentHeader = new PersistentHeader(_webDriver);
             _persistentSidebar = new PersistentSidebar(_webDriver);
             _myInfoPage = new MyInfoPage(_webDriver);
+            _leaveListPage = new LeaveListPage(_webDriver);
+            _applyLeavePage = new ApplyLeavePage(_webDriver);
+            _addLeaveEntitlementsPage = new AddLeaveEntitlementsPage(_webDriver);
         }
 
 
@@ -124,7 +130,20 @@ namespace QA_Capstone_Project
         [TestMethod]
         public void ApplyForLeave()
         {
-
+            _loginPage.Login();
+            _persistentSidebar.sidebarButtonLeave.Click();
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait.Until(d => _leaveListPage.employeeNameTextbox.Displayed);
+            bool isThereLeave = _applyLeavePage.CheckForLeave();
+            if (isThereLeave == true) 
+            {
+                _applyLeavePage.ApplyForLeave();
+            }
+            else
+            {
+                _addLeaveEntitlementsPage.AddLeaveEntitlement();
+                _applyLeavePage.ApplyForLeave();
+            }
         }
 
         [TestCleanup]

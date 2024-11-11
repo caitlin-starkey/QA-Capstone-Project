@@ -1,9 +1,11 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace QA_Capstone_Project
 {
@@ -15,9 +17,37 @@ namespace QA_Capstone_Project
         {
             _webDriver = driver;
         }
-        public IWebElement leaveBalance => _webDriver.FindElement(By.XPath("//p[@class'oxd-text oxd-text--p orangehrm-leave-balance-text']"));
-        public IWebElement leaveEntitlementsDropdown => _webDriver.FindElement(By.XPath("//span[@class='oxd-topbar-body-nav-tab-item' and contains(., 'Entitlements')]"));
-        public IWebElement leaveEntitlementsDropdownAddEntitlements => _webDriver.FindElement(By.XPath("//a[@role='menuitem' and contains(., 'Add Entitlements')]"));
+        public bool CheckForLeave()
+        {
+            applyForLeaveButton.Click();
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait.Until(d => leaveBalance.Displayed);
+            Thread.Sleep(500); //can't figure out how else to get around the loader form obscuring my elements
+            leaveTypeDropdown.Click();
+            leaveTypeFMLAChoice.Click();
+            Thread.Sleep(500); //need time for the leave balance to update
+            string fmlaLeaveBalance = leaveBalance.Text;
+            string[] fmlaBalance = fmlaLeaveBalance.Split(' '); //allows me to remove " Days" from the number I need to parse
+            decimal balance = decimal.Parse(fmlaBalance[0]);
+            if (balance >= 1.00m) 
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void ApplyForLeave()
+        {
+
+        }
+        public string applyForLeaveUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/leave/applyLeave";
+        //public IWebElement formLoader => _webDriver.FindElement(By.XPath("//div[@class='oxd-form-loader']"));
+        public IWebElement applyForLeaveButton => _webDriver.FindElement(By.XPath("//a[@class='oxd-topbar-body-nav-tab-item' and contains(., 'Apply')]"));
+        public IWebElement leaveBalance => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p orangehrm-leave-balance-text']"));
+        public IWebElement leaveTypeDropdown => _webDriver.FindElement(By.XPath("//div[@class='oxd-select-text-input' and contains(./ancestor::*, 'Leave Type')]"));
+        public IWebElement leaveTypeFMLAChoice => _webDriver.FindElement(By.XPath("//div[@class='oxd-select-option' and contains(./*, 'CAN - FMLA')]"));
         public IWebElement fromOpenCalendarButton => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-calendar oxd-date-input-icon' and contains(./ancestor::*, 'From Date')]"));
         public IWebElement toOpenCalendarButton => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-calendar oxd-date-input-icon' and contains(./ancestor::*, 'To Date')]"));
         public IWebElement todaysDateCalendar => _webDriver.FindElement(By.XPath("//div[@class='oxd-date-input-link --today']"));

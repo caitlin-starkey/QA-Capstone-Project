@@ -68,7 +68,7 @@ namespace QA_Capstone_Project
             employeeNameTextbox.SendKeys(Keys.Control + "a");
             employeeNameTextbox.SendKeys(Keys.Delete);
             employeeNameTextbox.SendKeys("d");
-            Thread.Sleep(3000);
+            Thread.Sleep(3000); //waiting for options to populate
             employeeNameTextbox.SendKeys(Keys.ArrowDown);
             employeeNameTextbox.SendKeys(Keys.Return);
             SeleniumHelpers _seleniumHelpers;
