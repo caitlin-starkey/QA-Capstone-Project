@@ -67,7 +67,7 @@ namespace QA_Capstone_Project
         public IWebElement toOpenCalendarButton => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-calendar oxd-date-input-icon' and contains(./ancestor::*, 'To Date')]"));
         public IWebElement nextMonthOnCalendarButton => _webDriver.FindElement(By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
         public IWebElement todaysDateCalendar => _webDriver.FindElement(By.XPath("//div[@class='oxd-date-input-link --today']"));
-        public IWebElement todaysDateCalendarSelected => _webDriver.FindElement(By.XPath("//div[@class='oxd-calendar-date --selected --today']"));
+        public IWebElement todaysDateCalendarSelected => _webDriver.FindElement(By.XPath("//div[contains(@class, '--selected --today')]"));
         //public IWebElement normalDateCalendar => _webDriver.FindElement(By.XPath("//div[@class='oxd-calendar-date' and not(.., @class='--non-working-day oxd-calendar-date-wrapper')]"));
         //public IWebElement normalDateCalendarSelected => _webDriver.FindElement(By.XPath("//div[@class='oxd-calendar-date --selected' and not(.., @class='--non-working-day oxd-calendar-date-wrapper')]"));
         public IWebElement nextNormalDateCalendar => todaysDateCalendarSelected.FindElement(By.XPath("../following-sibling::div[@class='oxd-calendar-date-wrapper']//child::div[@class='oxd-calendar-date']"));
