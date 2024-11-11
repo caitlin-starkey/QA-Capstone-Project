@@ -48,6 +48,7 @@ namespace QA_Capstone_Project
         public IWebElement usernameTextbox => _webDriver.FindElement(By.XPath("//input[@name='username']"));
         public IWebElement passwordTextbox => _webDriver.FindElement(By.XPath("//input[@name='password']"));
         public IWebElement submitButton => _webDriver.FindElement(By.XPath("//button[@type='submit']"));
+        public IWebElement invalidCredentialsError => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text' and contains(., 'Invalid credentials')]"));
     }
     
 }

@@ -188,12 +188,18 @@ namespace QA_Capstone_Project
             string[] attachmentDetails = _myInfoPage.AttachAFileToPersonalDetails(fileName);
             _myInfoPage.VerifyAttachedFile(fileName, attachmentDetails);
         }
-    
-
         [TestMethod]
-        public void TestingMyMethods()
+        public void WildcardTestCaseExpectedFail() //attempting to log in with random credentials
         {
-            _loginPage.Login();
+            _webDriver.Navigate().GoToUrl(_loginPage.loginPageUrl);
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait.Until(d => _loginPage.usernameTextbox.Displayed);
+            string username= _seleniumHelpers.CreateUsername();
+            _loginPage.usernameTextbox.SendKeys(username);
+            string password= _seleniumHelpers.CreatePassword();
+            _loginPage.passwordTextbox.SendKeys(password);
+            _loginPage.submitButton.Click();
+            wait.Until(d => _loginPage.invalidCredentialsError.Displayed);
         }
 
         [TestCleanup]

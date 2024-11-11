@@ -125,7 +125,7 @@ namespace QA_Capstone_Project
         public IWebElement uploadFileInput => _webDriver.FindElement(By.XPath("//input[@type='file']"));
         public IWebElement attachmentCommentBox => _webDriver.FindElement(By.XPath("//textarea[@class='oxd-textarea oxd-textarea--active oxd-textarea--resize-vertical']"));
         public IWebElement attachmentCommentBoxFocused => _webDriver.FindElement(By.XPath("//textarea[@class='oxd-textarea oxd-textarea--focus oxd-textarea--resize-vertical']"));
-        //public IWebElement attachmentSaveButton => _webDriver.FindElement(By.XPath("//button[@type='submit' and contains(./ancestor::*, 'Add Attachment')]")); can't get this targeting to work
+        public IWebElement attachmentSaveButton => _webDriver.FindElement(By.XPath("//button[@type='submit' and contains(./ancestor::*, 'Add Attachment')]"));
 
         public IWebElement attachmentContainer => _webDriver.FindElement(By.XPath("//div[@class='oxd-table-body' and @role='rowgroup']"));
         public List<IWebElement> attachmentsList => attachmentContainer.FindElements(By.XPath("descendant::div[@role='row']")).ToList();
