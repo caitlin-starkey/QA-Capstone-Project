@@ -189,7 +189,7 @@ namespace QA_Capstone_Project
             _myInfoPage.VerifyAttachedFile(fileName, attachmentDetails);
         }
         [TestMethod]
-        public void WildcardTestCaseExpectedFail() //attempting to log in with random credentials
+        public void WildcardTestCaseExpectedFail() //attempting to log in with random credentials. Also here's my IJavascriptExecutor
         {
             _webDriver.Navigate().GoToUrl(_loginPage.loginPageUrl);
             WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
@@ -198,7 +198,8 @@ namespace QA_Capstone_Project
             _loginPage.usernameTextbox.SendKeys(username);
             string password= _seleniumHelpers.CreatePassword();
             _loginPage.passwordTextbox.SendKeys(password);
-            _loginPage.submitButton.Click();
+            var js = (IJavaScriptExecutor)_webDriver;
+            js.ExecuteScript("arguments[0].click();", _loginPage.submitButton);
             wait.Until(d => _loginPage.invalidCredentialsError.Displayed);
         }
 
