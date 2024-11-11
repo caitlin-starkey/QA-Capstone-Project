@@ -93,6 +93,7 @@
     <Compile Include="LeaveListPage.cs" />
     <Compile Include="LoginPage.cs" />
     <Compile Include="MyInfoPage.cs" />
+    <Compile Include="MyLeavePage.cs" />
     <Compile Include="PersistentHeader.cs" />
     <Compile Include="PersistentSidebar.cs" />
     <Compile Include="SeleniumHelpers.cs" />

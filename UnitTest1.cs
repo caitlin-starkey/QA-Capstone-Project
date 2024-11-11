@@ -24,6 +24,7 @@ namespace QA_Capstone_Project
         public LeaveListPage _leaveListPage;
         public ApplyLeavePage _applyLeavePage;
         public AddLeaveEntitlementsPage _addLeaveEntitlementsPage;
+        public MyLeavePage _myLeavePage;
 
         [TestInitialize]
         public void Setup()
@@ -40,6 +41,7 @@ namespace QA_Capstone_Project
             _leaveListPage = new LeaveListPage(_webDriver);
             _applyLeavePage = new ApplyLeavePage(_webDriver);
             _addLeaveEntitlementsPage = new AddLeaveEntitlementsPage(_webDriver);
+            _myLeavePage = new MyLeavePage(_webDriver);
         }
 
 
@@ -144,16 +146,21 @@ namespace QA_Capstone_Project
                 _addLeaveEntitlementsPage.AddLeaveEntitlement();
                 _applyLeavePage.ApplyForLeave();
             }
-
+            _persistentSidebar.sidebarButtonLeave.Click();
+            wait.Until(d => _leaveListPage.myRequestedLeaveComment.Displayed);
+            _myLeavePage.myLeaveHeaderButton.Click();
+            wait.Until(d => _myLeavePage.myLeaveListTitle.Displayed);
+            wait.Until(d => _myLeavePage.myRequestedLeaveComment.Displayed);
+            _myLeavePage.cancelLeaveButton.Click();
+            wait.Until(d => _myLeavePage.cancelLeaveSuccess.Displayed);
+            wait.Until(d => _myLeavePage.myLeaveStatusCancelled.Displayed);
+            _persistentSidebar.sidebarButtonLeave.Click();
+            wait.Until(d => _leaveListPage.noRecordsFound.Displayed); //in a perfect world that doesn't have other people submitting leave requests at the same time, this satisfies the conditions
         }
         [TestMethod]
         public void TestingMyMethods()
         {
             _loginPage.Login();
-            _persistentSidebar.sidebarButtonLeave.Click();
-            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            wait.Until(d => _leaveListPage.employeeNameTextbox.Displayed);
-            _applyLeavePage.ApplyForLeave();
         }
 
         [TestCleanup]

@@ -44,19 +44,17 @@ namespace QA_Capstone_Project
             applyForLeaveHeaderButton.Click();
             WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
             wait.Until(d => leaveBalance.Displayed);
-            Thread.Sleep(500); //can't figure out how else to get around the loader form obscuring my elements
+            Thread.Sleep(1000); //can't figure out how else to get around the loader form obscuring my elements
             leaveTypeDropdown.Click();
             leaveTypeFMLAChoice.Click();
             Thread.Sleep(500); //need time for the leave balance to update
             fromOpenCalendarButton.Click();
-            _webDriver.WaitAndClick(() => todaysDateCalendar);
-            fromOpenCalendarButton.Click();
             wait.Until(d => todaysDateCalendar.Displayed);
-            IWebElement useThisDate = nextNormalDateCalendar;
             nextNormalDateCalendar.Click(); //functionality I'd love to implement but don't have time to- making nextNormalDateCalendar into a list instead and using an if statement to click the next month and select a day there if there isn't an open date in the current month after the current date
             //to Calendar autopopulates starting on the day selected in from Calendar
             commentBox.SendKeys("I will not be available on my selected day(s).");
             submitLeaveApplicationButton.Click();
+            wait.Until(d => applyForLeaveSuccess.Displayed);
 
         }
         public string applyForLeaveUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/leave/applyLeave";
@@ -75,6 +73,7 @@ namespace QA_Capstone_Project
         public IWebElement nextNormalDateCalendar => todaysDateCalendarSelected.FindElement(By.XPath("../following-sibling::div[@class='oxd-calendar-date-wrapper']//child::div[@class='oxd-calendar-date']"));
         public IWebElement commentBox => _webDriver.FindElement(By.XPath("//textarea[@class='oxd-textarea oxd-textarea--active oxd-textarea--resize-vertical']"));
         public IWebElement submitLeaveApplicationButton => _webDriver.FindElement(By.XPath("//button[@type='submit']"));
+        public IWebElement applyForLeaveSuccess => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text' and contains(., 'Successfully Saved')]"));
         //public IWebElement nextNormalDateCalendarNotFull => nextNormalDateCalendar.FindElement(By.XPath("../following-sibling::div[@class='oxd-calendar-date-wrapper')]"));
         //public IWebElement holidayFullDateCalendar => _webDriver.FindElement(By.XPath("//div[@class='--holiday-full oxd-calendar-date']"));
         //public IWebElement nonWorkingDateCalendar => _webDriver.FindElement(By.XPath("//div[@class='--non-working-day oxd-calendar-date-wrapper']"));

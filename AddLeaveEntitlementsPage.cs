@@ -20,9 +20,9 @@ namespace QA_Capstone_Project
         }
         public void AddLeaveEntitlement()
         {
-            leaveEntitlementsDropdown.Click();
+            leaveEntitlementsHeaderDropdown.Click();
             WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            _webDriver.WaitAndClick(() => leaveEntitlementsDropdownAddEntitlements);
+            _webDriver.WaitAndClick(() => leaveEntitlementsHeaderDropdownAddEntitlements);
             wait.Until(d => addToIndividualEmployeeBubble.Displayed);
             string expectedUrl = addLeaveEntitlementsUrl;
             string actualUrl = _webDriver.Url;
@@ -42,8 +42,8 @@ namespace QA_Capstone_Project
         }
 
         public string addLeaveEntitlementsUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/leave/addLeaveEntitlement";
-        public IWebElement leaveEntitlementsDropdown => _webDriver.FindElement(By.XPath("//span[@class='oxd-topbar-body-nav-tab-item' and contains(., 'Entitlements')]"));
-        public IWebElement leaveEntitlementsDropdownAddEntitlements => _webDriver.FindElement(By.XPath("//a[@role='menuitem' and contains(., 'Add Entitlements')]"));
+        public IWebElement leaveEntitlementsHeaderDropdown => _webDriver.FindElement(By.XPath("//span[@class='oxd-topbar-body-nav-tab-item' and contains(., 'Entitlements')]"));
+        public IWebElement leaveEntitlementsHeaderDropdownAddEntitlements => _webDriver.FindElement(By.XPath("//a[@role='menuitem' and contains(., 'Add Entitlements')]"));
         public IWebElement addToIndividualEmployeeBubble => _webDriver.FindElement(By.XPath("//span[@class='oxd-radio-input oxd-radio-input--active --label-right oxd-radio-input' and contains(.., 'Individual Employee')]"));
         public IWebElement employeeNameTextbox => _webDriver.FindElement(By.XPath("//input[@placeholder='Type for hints...']"));
         public IWebElement leaveTypeDropdown => _webDriver.FindElement(By.XPath("//div[@class='oxd-select-text-input' and contains(./ancestor::*, 'Leave Type')]"));

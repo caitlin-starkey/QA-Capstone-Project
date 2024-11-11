@@ -17,6 +17,7 @@ namespace QA_Capstone_Project
         }
         public string leaveListPageUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/leave/viewLeaveList";
         public IWebElement employeeNameTextbox => _webDriver.FindElement(By.XPath("//input[@placeholder='Type for hints...']"));
-
+        public IWebElement myRequestedLeaveComment => _webDriver.FindElement(By.XPath("//div[@class='oxd-table-cell oxd-padding-cell' and contains(./*, 'I will not be available on my selected day(s).')]"));
+        public IWebElement noRecordsFound => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text' and contains(., 'No Records Found')]"));
     }
 }
