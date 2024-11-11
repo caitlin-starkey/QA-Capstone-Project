@@ -10,12 +10,17 @@ namespace QA_Capstone_Project
 {
     public static class ExtensionMethods
     {
-        public static void WaitAndClick(this IWebDriver _driver, Func<IWebElement> element)
+        public static void WaitAndClick(this IWebDriver _webDriver, Func<IWebElement> element)
 
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
             wait.Until(d => element().Displayed);
             element().Click();
+        }
+        public static void WaitUntilEnabled(this IWebDriver _webDriver, Func<IWebElement> element)
+        {
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait.Until(d => element().Enabled);
         }
     }
 }

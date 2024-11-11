@@ -90,6 +90,7 @@
     <Compile Include="ApplyLeavePage.cs" />
     <Compile Include="DashboardPage.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="HelpPage.cs" />
     <Compile Include="LeaveListPage.cs" />
     <Compile Include="LoginPage.cs" />
     <Compile Include="MyInfoPage.cs" />

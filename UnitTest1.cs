@@ -25,6 +25,7 @@ namespace QA_Capstone_Project
         public ApplyLeavePage _applyLeavePage;
         public AddLeaveEntitlementsPage _addLeaveEntitlementsPage;
         public MyLeavePage _myLeavePage;
+        public HelpPage _helpPage;
 
         [TestInitialize]
         public void Setup()
@@ -42,6 +43,7 @@ namespace QA_Capstone_Project
             _applyLeavePage = new ApplyLeavePage(_webDriver);
             _addLeaveEntitlementsPage = new AddLeaveEntitlementsPage(_webDriver);
             _myLeavePage = new MyLeavePage(_webDriver);
+            _helpPage = new HelpPage(_webDriver);
         }
 
 
@@ -157,6 +159,25 @@ namespace QA_Capstone_Project
             _persistentSidebar.sidebarButtonLeave.Click();
             wait.Until(d => _leaveListPage.noRecordsFound.Displayed); //in a perfect world that doesn't have other people submitting leave requests at the same time, this satisfies the conditions
         }
+        [TestMethod]
+        public void HelpPageAndNewTab()
+        {
+            _loginPage.Login();
+            _dashboardPage.helpIcon.Click();
+            var browserTabs = _webDriver.WindowHandles;
+            _webDriver.SwitchTo().Window(browserTabs[1]);
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait.Until(d => _helpPage.adminUserGuideButton.Displayed);
+            Assert.AreEqual(_helpPage.helpPageUrl, _webDriver.Url);
+            _webDriver.WaitUntilEnabled(() => _helpPage.adminUserGuideButton);
+            _webDriver.WaitUntilEnabled(() => _helpPage.employeeUserGuideButton);
+            _webDriver.WaitUntilEnabled(() => _helpPage.mobileAppButton);
+            _webDriver.WaitUntilEnabled(() => _helpPage.AWSGuideButton);
+            _webDriver.WaitUntilEnabled(() => _helpPage.FAQsButton);
+            _webDriver.WaitUntilEnabled(() => _helpPage.searchBar);
+            _webDriver.WaitUntilEnabled(() => _helpPage.signInButton);
+        }
+    
         [TestMethod]
         public void TestingMyMethods()
         {
