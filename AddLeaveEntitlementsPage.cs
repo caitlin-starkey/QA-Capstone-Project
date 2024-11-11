@@ -22,8 +22,7 @@ namespace QA_Capstone_Project
         {
             leaveEntitlementsDropdown.Click();
             WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            wait.Until(d => leaveEntitlementsDropdownAddEntitlements.Displayed);
-            leaveEntitlementsDropdownAddEntitlements.Click();
+            _webDriver.WaitAndClick(() => leaveEntitlementsDropdownAddEntitlements);
             wait.Until(d => addToIndividualEmployeeBubble.Displayed);
             string expectedUrl = addLeaveEntitlementsUrl;
             string actualUrl = _webDriver.Url;
@@ -50,7 +49,7 @@ namespace QA_Capstone_Project
         public IWebElement leaveTypeDropdown => _webDriver.FindElement(By.XPath("//div[@class='oxd-select-text-input' and contains(./ancestor::*, 'Leave Type')]"));
         public IWebElement leaveTypeFMLAChoice => _webDriver.FindElement(By.XPath("//div[@class='oxd-select-option' and contains(./*, 'CAN - FMLA')]"));
         public IWebElement entitlementTextbox => _webDriver.FindElement(By.XPath("//input[@class='oxd-input oxd-input--active' and not(@placeholder='Search')]"));
-        public IWebElement entitlementTextboxFocused => _webDriver.FindElement(By.XPath("//input[@class='oxd-input oxd-input--focus' and not(contains(., @placeholder='Search'))]"));
+        //public IWebElement entitlementTextboxFocused => _webDriver.FindElement(By.XPath("//input[@class='oxd-input oxd-input--focus' and not(., @placeholder='Search')]")); unneeded helper element
         public IWebElement saveButton => _webDriver.FindElement(By.XPath("//button[@type='submit']"));
         public IWebElement confirmSaveButton => _webDriver.FindElement(By.XPath("//button[@type='button' and contains(., 'Confirm')]"));
         public IWebElement addEntitlementSuccess => _webDriver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text' and contains(., 'Successfully Saved')]"));

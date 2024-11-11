@@ -44,7 +44,7 @@ namespace QA_Capstone_Project
 
 
         [TestMethod]
-        public void AddNewUserAndLogin() 
+        public void AddNewUserAndLogin()
         {
             _loginPage.Login();
             _persistentSidebar.sidebarButtonAdmin.Click();
@@ -74,7 +74,7 @@ namespace QA_Capstone_Project
             Assert.AreEqual(expectedUrl, actualUrl);
             _webDriver.WaitAndClick(() => _adminPage.addUserButton);
             string[] newUserDetails = _addOrEditUserPage.AddUser();
-            string[] names = newUserDetails[0].Split(' '); 
+            string[] names = newUserDetails[0].Split(' ');
             var firstName = names.First();
             var lastName = names.Last();
             string expectedEmployeeName = firstName + " " + lastName;
@@ -135,7 +135,7 @@ namespace QA_Capstone_Project
             WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
             wait.Until(d => _leaveListPage.employeeNameTextbox.Displayed);
             bool isThereLeave = _applyLeavePage.CheckForLeave();
-            if (isThereLeave == true) 
+            if (isThereLeave == true)
             {
                 _applyLeavePage.ApplyForLeave();
             }
@@ -144,6 +144,16 @@ namespace QA_Capstone_Project
                 _addLeaveEntitlementsPage.AddLeaveEntitlement();
                 _applyLeavePage.ApplyForLeave();
             }
+
+        }
+        [TestMethod]
+        public void TestingMyMethods()
+        {
+            _loginPage.Login();
+            _persistentSidebar.sidebarButtonLeave.Click();
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+            wait.Until(d => _leaveListPage.employeeNameTextbox.Displayed);
+            _applyLeavePage.ApplyForLeave();
         }
 
         [TestCleanup]
