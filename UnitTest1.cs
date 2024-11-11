@@ -6,6 +6,8 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System.Threading;
 using System.Linq;
+using System.Collections.Generic;
+using System.IO;
 
 namespace QA_Capstone_Project
 {
@@ -177,7 +179,17 @@ namespace QA_Capstone_Project
             _webDriver.WaitUntilEnabled(() => _helpPage.searchBar);
             _webDriver.WaitUntilEnabled(() => _helpPage.signInButton);
         }
+        [TestMethod]
+        [DataRow("totallyInnocuousTestFile.txt")]
+        public void UploadAFile(string fileName)
+        {
+            _loginPage.Login();
+            _persistentSidebar.sidebarButtonMyInfo.Click();
+            string[] attachmentDetails = _myInfoPage.AttachAFileToPersonalDetails(fileName);
+            _myInfoPage.VerifyAttachedFile(fileName, attachmentDetails);
+        }
     
+
         [TestMethod]
         public void TestingMyMethods()
         {
